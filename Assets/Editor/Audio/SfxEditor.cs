@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using Audio;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 #if UNITY_EDITOR
 
 [CustomEditor(typeof(SfxSO))]
 public class SfxEditor : Editor
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public VisualTreeAsset uxml;
+    public Button PlayButton, StopButton;
 
-    // Update is called once per frame
-    void Update()
+    public override VisualElement CreateInspectorGUI()
     {
-        
+        var root = new VisualElement();
+
+        uxml.CloneTree(root);
+
+        return root;
     }
 }
 

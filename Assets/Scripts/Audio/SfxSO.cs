@@ -35,12 +35,13 @@ namespace Audio
             DestroyImmediate(_previewer.gameObject);
         }
 
-        private void PlayPreview()
+        [ContextMenu("Play Preview")]
+        public void PlayPreview()
         {
             Play(_previewer);
         }
 
-        private void StopPreview()
+        public void StopPreview()
         {
             _previewer.Stop();
         }
@@ -87,7 +88,7 @@ namespace Audio
                 source = sourceObj.GetComponent<AudioSource>();
             }
 
-            source.clip = clips[0];
+            source.clip = GetAudioClip();
             source.volume = Random.Range(volume.x, volume.y);
             source.pitch = Random.Range(pitch.x, pitch.y);
             
