@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:VisualElement style="justify-content: flex-start; align-items: stretch; font-size: 20px;">
+        <ui:Label text="List of Clips" display-tooltip-when-elided="true" name="ListTxt" style="font-size: 30px; align-items: flex-start; justify-content: flex-start; -unity-font-style: bold;" />
+        <uie:PropertyField name="List" />
+        <ui:Label text="Sound Settings" display-tooltip-when-elided="true" name="SettingsTxt" style="font-size: 25px; align-items: flex-start; justify-content: flex-start; -unity-font-style: italic;" />
+        <uie:PropertyField name="VolMinMax" />
+        <uie:PropertyField name="PitMinMax" />
+        <ui:VisualElement style="flex-direction: row; justify-content: space-around;">
+            <uie:EnumField label="Play Order:" value="Center" style="font-size: 17.5px; -unity-font-style: normal;" />
+            <uie:IntegerField label="Play Index:" value="42" style="font-size: 17.5px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
