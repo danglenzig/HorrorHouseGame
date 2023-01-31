@@ -1,13 +1,15 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
-    <ui:VisualElement style="justify-content: flex-start; align-items: stretch; font-size: 20px;">
-        <ui:Label text="List of Clips" display-tooltip-when-elided="true" name="ListTxt" style="font-size: 30px; align-items: flex-start; justify-content: flex-start; -unity-font-style: bold;" />
-        <uie:PropertyField name="List" />
-        <ui:Label text="Sound Settings" display-tooltip-when-elided="true" name="SettingsTxt" style="font-size: 25px; align-items: flex-start; justify-content: flex-start; -unity-font-style: italic;" />
-        <uie:PropertyField name="VolMinMax" />
-        <uie:PropertyField name="PitMinMax" />
-        <ui:VisualElement style="flex-direction: row; justify-content: space-around;">
-            <uie:EnumField label="Play Order:" value="Center" style="font-size: 17.5px; -unity-font-style: normal;" />
-            <uie:IntegerField label="Play Index:" value="42" style="font-size: 17.5px;" />
+    <ui:VisualElement style="flex-wrap: nowrap; justify-content: flex-start; align-items: stretch; background-image: url(&apos;project://database/Assets/Art%20Assets/Textures/sfxBack.png?fileID=2800000&amp;guid=c0775f3b00b2aef4ab6b40ff33cb5243&amp;type=3#sfxBack&apos;); height: 100%; font-size: 8px;">
+        <ui:VisualElement style="justify-content: flex-start; align-items: stretch; font-size: 20px;">
+            <ui:Label text="List of Clips" display-tooltip-when-elided="true" name="ListTxt" style="font-size: 30px; align-items: flex-start; justify-content: flex-start; -unity-font-style: bold;" />
+            <uie:PropertyField name="List" binding-path="clips" style="font-size: 12.5px;" />
+            <ui:Label text="Sound Settings" display-tooltip-when-elided="true" name="SettingsTxt" style="font-size: 25px; align-items: flex-start; justify-content: flex-start; -unity-font-style: italic;" />
+            <uie:PropertyField name="VolMinMax" binding-path="volume" />
+            <uie:PropertyField name="PitMinMax" binding-path="pitch" />
+            <ui:VisualElement style="flex-direction: row; justify-content: space-around;">
+                <uie:EnumField label="Play Order:" value="Center" binding-path="playOrder" style="font-size: 17.5px; -unity-font-style: normal;" />
+                <uie:IntegerField label="Play Index:" value="0" binding-path="playIndex" style="font-size: 17.5px;" />
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
