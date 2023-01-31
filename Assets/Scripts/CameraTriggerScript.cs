@@ -5,7 +5,6 @@ using UnityEngine;
 public class CameraTriggerScript : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera triggerCamera;
-    [SerializeField] private bool useTriggerStay;
 
     private void OnTriggerStay(Collider other)
     {
