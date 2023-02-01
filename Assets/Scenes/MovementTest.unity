@@ -1015,11 +1015,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56cd956bcdfcb7e4daae4f277797b7db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 5
   feetTransform: {fileID: 1072467709}
   floorMask:
     serializedVersion: 2
     m_Bits: 64
-  moveSpeed: 5
   jumpForce: 5
 --- !u!54 &760302403
 Rigidbody:
@@ -1509,8 +1509,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 937579364}
-  m_LocalRotation: {x: -0.5755546, y: -0.0048802136, z: -0.005027318, w: -0.81773335}
-  m_LocalPosition: {x: 9.22, y: 12.59, z: -0.059999466}
+  m_LocalRotation: {x: 0.008356984, y: -0.27481294, z: -0.0023857912, w: -0.9614585}
+  m_LocalPosition: {x: 17.596764, y: 3.7963796, z: -12.034016}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2540,13 +2540,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da964a69e0bb8d847a890442a1060e18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  feetTransform: {fileID: 0}
-  floorMask:
-    serializedVersion: 2
-    m_Bits: 0
   moveSpeed: 4
-  jumpForce: 0
-  floatSpeed: 2
+  floatRange: {x: 3.25, y: 5.5}
+  floatSpeed: 1.75
 --- !u!65 &1728985252
 BoxCollider:
   m_ObjectHideFlags: 0

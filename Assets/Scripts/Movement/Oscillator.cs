@@ -8,16 +8,20 @@ namespace Movement
     [DisallowMultipleComponent]
     public class Oscillator : MonoBehaviour
     {
-        [Tooltip("The local position about which oscillations are centered.")]
-        [SerializeField] public Vector3 _localEquilibriumPosition = Vector3.zero;
-        [Tooltip("The axes over which the oscillator applies force. Within range [0, 1].")]
-        [SerializeField] private Vector3 _forceScale = Vector3.one;
-        [Tooltip("The greater the stiffness constant, the lesser the amplitude of oscillations.")]
-        [SerializeField] private float _stiffness = 10f;
-        [Tooltip("The greater the damper constant, the faster that oscillations will dissapear.")]
-        [SerializeField] private float _damper = 1f;
-        [Tooltip("The greater the mass, the lesser the amplitude of oscillations.")]
-        [SerializeField] private float _mass = 1f;
+        [Tooltip("The local position about which oscillations are centered.")] [SerializeField]
+        public Vector3 _localEquilibriumPosition = Vector3.zero;
+
+        [Tooltip("The axes over which the oscillator applies force. Within range [0, 1].")] [SerializeField]
+        private Vector3 _forceScale = Vector3.one;
+
+        [Tooltip("The greater the stiffness constant, the lesser the amplitude of oscillations.")] [SerializeField]
+        private float _stiffness = 10f;
+
+        [Tooltip("The greater the damper constant, the faster that oscillations will dissapear.")] [SerializeField]
+        private float _damper = 1f;
+
+        [Tooltip("The greater the mass, the lesser the amplitude of oscillations.")] [SerializeField]
+        private float _mass = 1f;
 
         private Rigidbody _rb;
         private Vector3 _previousDisplacement = Vector3.zero;
@@ -55,10 +59,16 @@ namespace Movement
                 position = parent.TransformVector(position);
                 equilibrium = parent.TransformVector(equilibrium);
             }
-            Vector3 displacement = position - equilibrium; // Displacement from the rest point. Displacement is the difference in position.
+
+            Vector3
+                displacement =
+                    position -
+                    equilibrium; // Displacement from the rest point. Displacement is the difference in position.
             Vector3 deltaDisplacement = displacement - _previousDisplacement;
             _previousDisplacement = displacement;
-            Vector3 velocity = deltaDisplacement / Time.fixedDeltaTime; // Kinematics. Velocity is the change-in-position over time.
+            Vector3
+                velocity = deltaDisplacement /
+                           Time.fixedDeltaTime; // Kinematics. Velocity is the change-in-position over time.
             Vector3 force = HookesLaw(displacement, velocity);
             return (force);
         }
@@ -101,13 +111,17 @@ namespace Movement
         private Vector3 CalculateDisplacementDueToForce(Vector3 force)
         {
             Vector3 acceleration = force / _mass; // Newton's second law.
-            Vector3 deltaVelocity = acceleration * Time.fixedDeltaTime; // Kinematics. Acceleration is the change in velocity over time.
+            Vector3
+                deltaVelocity =
+                    acceleration * Time.fixedDeltaTime; // Kinematics. Acceleration is the change in velocity over time.
             Vector3 velocity = deltaVelocity + _previousVelocity; // Calculating the updated velocity.
             _previousVelocity = velocity;
-            Vector3 displacement = velocity * Time.fixedDeltaTime; // Kinematics. Velocity is the change-in-position over time.
+            Vector3
+                displacement =
+                    velocity * Time.fixedDeltaTime; // Kinematics. Velocity is the change-in-position over time.
             return (displacement);
         }
-        
+
         /// <summary>
         /// Draws the oscillator bob (sphere) and the equilibrium (wire sphere).
         /// </summary>
@@ -131,7 +145,8 @@ namespace Movement
 
             // Draw (solid) bob position
             // Color goes from green (0,1,0,0) to yellow (1,1,0,0) to red (1,0,0,0).
-            float upperAmplitude = _stiffness * _mass / (3f * 100f); // Approximately the upper limit of the amplitude within regular use
+            float upperAmplitude =
+                _stiffness * _mass / (3f * 100f); // Approximately the upper limit of the amplitude within regular use
             color.r = 2f * Mathf.Clamp(Vector3.Magnitude(bob - equilibrium) * upperAmplitude, 0f, 0.5f);
             color.g = 2f * (1f - Mathf.Clamp(Vector3.Magnitude(bob - equilibrium) * upperAmplitude, 0.5f, 1f));
             Gizmos.color = color;

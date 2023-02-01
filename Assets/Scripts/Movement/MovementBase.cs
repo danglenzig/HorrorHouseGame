@@ -7,19 +7,13 @@ namespace Movement
         protected Vector3 MovementInput;
         protected Rigidbody Rb;
 
-        [SerializeField] protected Transform feetTransform;
-        [SerializeField] protected LayerMask floorMask;
-        
         [SerializeField] protected float moveSpeed;
-        [SerializeField] protected float jumpForce;
 
-        protected bool CanJump;
-        
         protected void Awake()
         {
             Rb = GetComponent<Rigidbody>();
         }
-        
+
         protected void MovePlayer()
         {
             Vector3 moveDirection = MovementInput * moveSpeed;
@@ -31,16 +25,9 @@ namespace Movement
             if (MovementInput != Vector3.zero)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(MovementInput);
-                targetRotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 360 * Time.fixedDeltaTime);
+                targetRotation =
+                    Quaternion.RotateTowards(transform.rotation, targetRotation, 360 * Time.fixedDeltaTime);
                 Rb.MoveRotation(targetRotation);
-            }
-        }
-
-        protected void JumpCheck()
-        {
-            if (Input.GetKeyDown(KeyCode.Space) && Physics.CheckSphere(feetTransform.position, .25f, floorMask))
-            {
-                Rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             }
         }
     }
