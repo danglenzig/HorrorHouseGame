@@ -15,6 +15,11 @@ namespace Shaders
         private float _currentSize = 0f;
         private float _animationSpeed = 5f;
 
+        private void Start()
+        {
+            cam = Camera.main;
+        }
+
         private void Update()
         {
             var lookUpPos = (transform.position - cam.transform.position) * 1.0025f;

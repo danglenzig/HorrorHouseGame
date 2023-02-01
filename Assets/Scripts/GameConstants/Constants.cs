@@ -7,7 +7,7 @@
 
     public static class Variables
     {
-        public const int ButtonCount = 5;
+        
     }
 
     public static class Strings
