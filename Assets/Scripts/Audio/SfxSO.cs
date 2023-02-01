@@ -38,7 +38,14 @@ namespace Audio
         [ContextMenu("Play Preview")]
         public void PlayPreview()
         {
-            Play(_previewer);
+            if (_previewer != null)
+            {
+                Play(_previewer);
+            }
+            else
+            {
+                Debug.Log("Previewer is null");
+            }
         }
 
         public void StopPreview()
@@ -75,39 +82,49 @@ namespace Audio
         
         public AudioSource Play(AudioSource audioSource = null)
         {
-            if (clips.Length == 0)
+            if (clips != null)
             {
-                Debug.Log("No clips added!");
-                return null;
-            }
+                if (clips.Length == 0)
+                {
+                    Debug.Log("No clips added!");
+                    return null;
+                }
 
-            var source = audioSource;
-            if (source == null)
-            {
-                var sourceObj = new GameObject("Sound", typeof(AudioSource));
-                source = sourceObj.GetComponent<AudioSource>();
-            }
+                var source = audioSource;
+                if (source == null)
+                {
+                    var sourceObj = new GameObject("Sound", typeof(AudioSource));
+                    source = sourceObj.GetComponent<AudioSource>();
+                }
 
-            source.clip = GetAudioClip();
-            source.volume = Random.Range(volume.x, volume.y);
-            source.pitch = Random.Range(pitch.x, pitch.y);
+                source.clip = GetAudioClip();
+                source.volume = Random.Range(volume.x, volume.y);
+                source.pitch = Random.Range(pitch.x, pitch.y);
             
-            source.Play();
+                source.Play();
             
-            #if UNITY_EDITOR
+                #if UNITY_EDITOR
 
-            if (source != _previewer)
-            {
-                Destroy(source.gameObject, source.clip.length/source.pitch);
-            }
+                if (source != _previewer)
+                {
+                    Destroy(source.gameObject, source.clip.length/source.pitch);
+                }
             
-            #else
+                #else
             
             Destroy(source.gameObject, source.clip.length/source.pitch);
             
-            #endif
+                #endif
 
-            return source;
+                return source;
+            }
+
+            else
+            {
+                Debug.Log("Clip array is null");
+                return null;
+            }
+            
         }
 
         enum ClipPlayOrder
