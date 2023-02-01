@@ -10,13 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb572a59e96bae848b89231f0a1d1bf5, type: 3}
-  m_Name: jumpSound
+  m_Name: DiaSfx2
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: 7aa14775135274442afd73bc5cda3458, type: 3}
-  - {fileID: 8300000, guid: 0b5f3c3d58c274d489aec2bfa85b677a, type: 3}
-  - {fileID: 8300000, guid: c4ddda61f55ddd24aaac012ba29a5a48, type: 3}
-  volume: {x: 0.87, y: 1}
-  pitch: {x: 0.7104626, y: 0.94}
-  playIndex: 2
+  - {fileID: 8300000, guid: 0df323925d49d1f4eb63e122fade9bba, type: 3}
+  volume: {x: 1, y: 1}
+  pitch: {x: 0.95, y: 1}
+  playIndex: 0
   playOrder: 0
