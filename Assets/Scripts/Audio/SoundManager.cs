@@ -1,41 +1,26 @@
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Audio;
 
 namespace Audio
 {
     public class SoundManager : MonoBehaviour
-    {/*
+    {
+        public static SoundManager Instance { get; private set; }
 
-        //public static AudioMixerGroup MusicMixer, SfxMixer;
-        
-        public static void PlaySoundFX(AudioClip soundToPlay, SoundType soundType)
+        private void Awake()
         {
-            GameObject soundObj = new GameObject("Sound");
-            AudioSource audioSource = soundObj.AddComponent<AudioSource>();
-            audioSource.outputAudioMixerGroup = GetMixer(soundType);
-            audioSource.PlayOneShot(soundToPlay);
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this);
+            }
+            else
+            {
+                Instance = this;
+            }
         }
 
-        public static AudioMixerGroup GetMixer(SoundType soundType)
+        public void PlaySfx(SfxSO soundEffect)
         {
-            switch (soundType)
-            {
-                case SoundType.Music:
-                    return MusicMixer;
-
-
-                case SoundType.SoundEffect:
-                    return SfxMixer;
-            }
-
-            return default;
-        }*/
-    }
-
-    public enum SoundType
-    {
-        Music,
-        SoundEffect
+            soundEffect.Play();
+        }
     }
 }
