@@ -46,10 +46,5 @@ namespace Movement
         {
             MovePlayer();
         }
-
-        public void OnJump()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }
