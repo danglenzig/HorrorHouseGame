@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1399916890176538672}
   - component: {fileID: 1399916890176538678}
   - component: {fileID: 1399916890176538687}
+  - component: {fileID: 4405573524656323964}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Player
@@ -130,6 +131,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da964a69e0bb8d847a890442a1060e18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MovementInput: {x: 0, y: 0, z: 0}
+  shouldJump: 0
   moveSpeed: 4
   floatRange: {x: 3.25, y: 5.5}
   floatSpeed: 1.75
@@ -150,6 +153,23 @@ MonoBehaviour:
   _stiffness: 10
   _damper: 1
   _mass: 1
+--- !u!114 &4405573524656323964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399916890176538679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5ddd253b61c5a846b337534aeb5ee2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallMat: {fileID: 2100000, guid: bfde7b6ee8fccf1439362fe50c87d740, type: 2}
+  cam: {fileID: 0}
+  mask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1001 &1710863625513153701
 PrefabInstance:
   m_ObjectHideFlags: 0
