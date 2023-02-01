@@ -11,9 +11,6 @@ namespace Movement
 
         private void Update()
         {
-            //Get Input
-            MovementInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-
             JumpCheck();
             RotatePlayer();
         }
@@ -25,7 +22,7 @@ namespace Movement
 
         private void JumpCheck()
         {
-            if (Input.GetKeyDown(KeyCode.Space) && Physics.CheckSphere(feetTransform.position, .25f, floorMask))
+            if (shouldJump && Physics.CheckSphere(feetTransform.position, .25f, floorMask))
             {
                 Rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             }

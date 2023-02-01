@@ -149,12 +149,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56cd956bcdfcb7e4daae4f277797b7db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MovementInput: {x: 0, y: 0, z: 0}
+  shouldJump: 0
   moveSpeed: 5
   feetTransform: {fileID: 7507159916689635360}
   floorMask:
     serializedVersion: 2
     m_Bits: 64
-  jumpForce: 5
+  jumpForce: 1
 --- !u!65 &7507159916934331797
 BoxCollider:
   m_ObjectHideFlags: 0
