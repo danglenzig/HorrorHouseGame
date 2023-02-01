@@ -58,9 +58,29 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 5d141065-ea85-40b9-ae7a-a4c68a3461d9
     m_ActionName: Action Map/MoveUp
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d7bd798b-e754-4b2f-96f6-4388525fd89e
+    m_ActionName: Action Map/Interact[/XInputControllerWindows/buttonSouth,/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c6007ecc-1f63-44c3-8feb-0a5583e9b531
+    m_ActionName: Action Map/Jump[/Keyboard/space,/XInputControllerWindows/buttonSouth]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: Action Map
