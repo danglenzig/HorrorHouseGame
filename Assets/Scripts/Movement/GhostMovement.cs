@@ -25,10 +25,7 @@ namespace Movement
 
             //FLOATING:
 
-            //Get Input
-            MovementInput = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-
-            if (Input.GetKey(KeyCode.Space))
+            if (shouldJump)
             {
                 _desiredHeight = floatRange.y;
                 _osc._localEquilibriumPosition.y = Mathf.Lerp(_osc._localEquilibriumPosition.y, _desiredHeight,
@@ -48,6 +45,11 @@ namespace Movement
         private void FixedUpdate()
         {
             MovePlayer();
+        }
+
+        public void OnJump()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
