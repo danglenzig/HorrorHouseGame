@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -9,6 +10,9 @@ namespace Audio
         public static DialogueCanvas Instance { get; private set; }
 
         private TextMeshProUGUI _dialogueTxt;
+
+        [SerializeField] private bool isPlaying;
+        private Queue<DialogueSo> _dialogueQueue = new Queue<DialogueSo>();
 
         private void Awake()
         {
@@ -23,20 +27,44 @@ namespace Audio
 
             _dialogueTxt = GetComponentInChildren<TextMeshProUGUI>();
             _dialogueTxt.enabled = false;
+            isPlaying = false;
         }
 
-        public void SetText(DialogueSo dialogue)
+        public void QueueDialogue(DialogueSo dialogue)
         {
-            _dialogueTxt.text = dialogue.dialogueText;
-            StartCoroutine(TextTimer(dialogue));
+            _dialogueQueue.Enqueue(dialogue);
+
+            if (!isPlaying)
+            {
+                isPlaying = true;
+                StartCoroutine(PlayDialogue());
+            }
         }
 
-        private IEnumerator TextTimer(DialogueSo dia)
+        private IEnumerator PlayDialogue()
         {
+            //Get dialogue and wait for sound to start (roughly .5 seconds)
+            DialogueSo dialogueToPlay = _dialogueQueue.Dequeue();
+            SoundManager.Instance.PlaySfx(dialogueToPlay.dialogueSound);
             yield return new WaitForSeconds(.5f);
+            
+            //Set text and enable it
+            _dialogueTxt.text = dialogueToPlay.dialogueText;
             _dialogueTxt.enabled = true;
-            yield return new WaitForSeconds(dia.dialogueSound.clips[0].length);
+            
+            //Wait for dialogue to finish and disable the text
+            yield return new WaitForSeconds(dialogueToPlay.dialogueSound.clips[0].length);
             _dialogueTxt.enabled = false;
+            
+            //If there are more queued... play next!
+            if (_dialogueQueue.Count > 0)
+            {
+                StartCoroutine(PlayDialogue());
+            }
+            else
+            {
+                isPlaying = false;
+            }
         }
     }
 }

@@ -14,8 +14,7 @@ namespace Audio
         {
             if (!_hasPlayed)
             {
-                SoundManager.Instance.PlaySfx(dialogue.dialogueSound);
-                DialogueCanvas.Instance.SetText(dialogue);
+                DialogueCanvas.Instance.QueueDialogue(dialogue);
             }
             
             if (triggerType == TriggerType.PlayOnce)
