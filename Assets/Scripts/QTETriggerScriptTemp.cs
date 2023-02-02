@@ -8,7 +8,9 @@ public class QTETriggerScriptTemp : MonoBehaviour
 {
     private Keyboard myKB;
     [SerializeField] private string lookForTag = "Player";
-    public string QTEPromptString = "Press enter to magic the door open.";
+    public string QTEPromptString = "Prompt text";
+    
+
     [SerializeField] private TMP_Text QTEPromptText;
     [SerializeField] private GameObject QTEObject;
 
@@ -56,12 +58,13 @@ public class QTETriggerScriptTemp : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Ghost")
         {
             if (!QTEInProgress)
             {
+                QTEPromptText.text = QTEPromptString;
                 QTEPromptText.gameObject.SetActive(true);
                 QTEPromptUp = true;
             }
@@ -69,7 +72,18 @@ public class QTETriggerScriptTemp : MonoBehaviour
         }
     }
 
-    
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.tag == "Ghost")
+        {
+            QTESolved = false;
+            QTEInProgress = false;
+            QTEObject.SetActive(false);
+            QTEPromptText.gameObject.SetActive(false);
+        }
+    }
+
+
 
 
     public void QTEWin()
@@ -77,6 +91,8 @@ public class QTETriggerScriptTemp : MonoBehaviour
         QTEPromptText.text = "Sucess!!!";
         QTEPromptText.gameObject.SetActive(true);
         QTEObject.SetActive(false);
+        QTESolved = false;
+        QTEInProgress = false;
         StartCoroutine(KillQTE());
     }
 

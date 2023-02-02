@@ -28,4 +28,15 @@ public class CameraTriggerScript : MonoBehaviour
             CameraManagerScript.currentActiveCamera = triggerCamera;
         }
     }
+
+    /*
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Ghost")
+        {
+
+            CameraManagerScript.currentActiveCamera = triggerCamera;
+        }
+    }
+    */
 }
