@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1399916890176538678}
   - component: {fileID: 1399916890176538687}
   - component: {fileID: 4405573524656323964}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Ghost
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -180,6 +180,10 @@ PrefabInstance:
     - target: {fileID: 3449725607807220814, guid: 396503bf38399134293113fe6c701d97, type: 3}
       propertyPath: m_Name
       value: PlayerInput
+      objectReference: {fileID: 0}
+    - target: {fileID: 3449725607807220814, guid: 396503bf38399134293113fe6c701d97, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8567971630130014677, guid: 396503bf38399134293113fe6c701d97, type: 3}
       propertyPath: m_RootOrder
