@@ -62,14 +62,14 @@ namespace Movement
             Game.CharacterHandler.OnGhostJumpReleased.RemoveListener(OnGhostJumpReleased);
         }
 
-        private void OnGhostJumpReleased()
-        {
-            shouldJump = false;
-        }
-
         private void OnGhostJumpPressed()
         {
             shouldJump = true;
+        }
+
+        private void OnGhostJumpReleased()
+        {
+            shouldJump = false;
         }
 
         private void OnGhostMovementInput(Vector3 input)

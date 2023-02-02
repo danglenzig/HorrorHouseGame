@@ -163,9 +163,6 @@ public class CharacterHandler : MonoBehaviour
         humanPlayer = Instantiate(humanPrefab);
         ghostPlayer = Instantiate(ghostPrefab);
 
-        humanPlayer.GetComponent<MovementBase>();
-        ghostPlayer.GetComponent<MovementBase>();
-
         foreach (var action in player1Input.currentActionMap.actions)
         {
             if (action.name == Strings.Move)
