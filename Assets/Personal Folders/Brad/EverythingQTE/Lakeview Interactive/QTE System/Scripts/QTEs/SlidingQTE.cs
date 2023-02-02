@@ -125,10 +125,11 @@ namespace QTESystem
             {
                 return;
             }
-
+            
             var newColor = image.color;
             newColor.a = val;
             image.color = newColor;
+            
         }
 
         public void UpdateSlidingAlpha(float val)
