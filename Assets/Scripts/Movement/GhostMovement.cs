@@ -1,11 +1,10 @@
 using UnityEngine;
-using GD.MinMaxSlider;
 
 namespace Movement
 {
     public class GhostMovement : MovementBase
     {
-        [MinMaxSlider(0, 10)] [SerializeField] private Vector2 floatRange;
+        [SerializeField] private Vector2 floatRange;
 
         [SerializeField] private float floatSpeed;
 
