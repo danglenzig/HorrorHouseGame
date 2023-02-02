@@ -119,6 +119,8 @@
         "com.unity.modules.physics": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.render-pipelines.core": {
       "version": "12.1.9",
       "depth": 1,
