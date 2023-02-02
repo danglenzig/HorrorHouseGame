@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GameConstants;
 using Movement;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class CharacterHandler : MonoBehaviour
@@ -13,10 +13,11 @@ public class CharacterHandler : MonoBehaviour
 
     [Header("Settings")] [SerializeField] private bool spawnPlayersOnStart;
     private MovementBase ghostMovementBase;
-    private GameObject ghostPlayer;
     private MovementBase humanMovementBase;
 
+    private GameObject ghostPlayer;
     private GameObject humanPlayer;
+
     private InputAction inputActions;
 
     // ReSharper disable once ArrangeObjectCreationWhenTypeEvident
@@ -24,6 +25,9 @@ public class CharacterHandler : MonoBehaviour
 
     private PlayerInput player1Input;
     private PlayerInput player2Input;
+
+    public UnityEvent OnHumanInteract;
+    public UnityEvent OnGhostInteract;
 
     private void Update()
     {
@@ -36,6 +40,58 @@ public class CharacterHandler : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.R))
         {
             inputDevices = GetAllInputDevices();
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (player1Input != null)
+        {
+            foreach (var action in player1Input.currentActionMap.actions)
+            {
+                Debug.Log($"Unsubscribed {action}.");
+                if (action.name == Strings.Move)
+                {
+                    action.performed -= OnHumanMovementInput;
+                    action.canceled -= OnHumanNoMovementInput;
+                }
+                else if (action.name == Strings.Jump)
+                {
+                    action.started -= OnHumanJumpPressed;
+                    action.canceled -= OnHumanJumpReleased;
+                }
+                
+                else if (action.name == Strings.Interact)
+                {
+                    action.started -= HumanInteract;
+                }
+            }
+        }
+
+        if (player2Input == null)
+        {
+            return;
+        }
+
+        {
+            foreach (var action in player2Input.currentActionMap.actions)
+            {
+                Debug.Log($"Unsubscribed {action}.");
+                if (action.name == Strings.Move)
+                {
+                    action.performed -= OnGhostMovementInput;
+                    action.canceled -= OnGhostNoMovementInput;
+                }
+                else if (action.name == Strings.Jump)
+                {
+                    action.started -= OnGhostJumpPressed;
+                    action.canceled -= OnGhostJumpReleased;
+                }
+                else if (action.name == Strings.Interact)
+                {
+                    action.started -= GhostInteract;
+                }
+            }
         }
     }
 
@@ -83,6 +139,15 @@ public class CharacterHandler : MonoBehaviour
         humanMovementBase.shouldJump = false;
     }
 
+    private void HumanInteract(InputAction.CallbackContext obj)
+    {
+        OnHumanInteract.Invoke();
+    }
+
+    private void GhostInteract(InputAction.CallbackContext obj)
+    {
+    }
+
     private void SpawnCharacters()
     {
         humanPlayer = Instantiate(humanPrefab);
@@ -93,16 +158,19 @@ public class CharacterHandler : MonoBehaviour
 
         foreach (var action in player1Input.currentActionMap.actions)
         {
-            switch (action.name)
+            if (action.name == Strings.Move)
             {
-                case Strings.Move:
-                    action.performed += OnHumanMovementInput;
-                    action.canceled += OnHumanNoMovementInput;
-                    break;
-                case Strings.Jump:
-                    action.started += OnHumanJumpPressed;
-                    action.canceled += OnHumanJumpReleased;
-                    break;
+                action.performed += OnHumanMovementInput;
+                action.canceled += OnHumanNoMovementInput;
+            }
+            else if (action.name == Strings.Jump)
+            {
+                action.started += OnHumanJumpPressed;
+                action.canceled += OnHumanJumpReleased;
+            }
+            else if (action.name == Strings.Interact)
+            {
+                action.started += HumanInteract;
             }
         }
 
@@ -113,61 +181,19 @@ public class CharacterHandler : MonoBehaviour
 
         foreach (var action in player2Input.currentActionMap.actions)
         {
-            switch (action.name)
+            if (action.name == Strings.Move)
             {
-                case Strings.Move:
-                    action.performed += OnGhostMovementInput;
-                    action.canceled += OnGhostNoMovementInput;
-                    break;
-                case Strings.Jump:
-                    action.started += OnGhostJumpPressed;
-                    action.canceled += OnGhostJumpReleased;
-                    break;
+                action.performed += OnGhostMovementInput;
+                action.canceled += OnGhostNoMovementInput;
             }
-        }
-    }
-
-    private void OnDisable()
-    {
-        if (player1Input != null)
-        {
-            foreach (var action in player1Input.currentActionMap.actions)
+            else if (action.name == Strings.Jump)
             {
-                Debug.Log($"Unsubscribed {action}.");
-                switch (action.name)
-                {
-                    case Strings.Move:
-                        action.performed -= OnHumanMovementInput;
-                        action.canceled -= OnHumanNoMovementInput;
-                        break;
-                    case Strings.Jump:
-                        action.started -= OnHumanJumpPressed;
-                        action.canceled -= OnHumanJumpReleased;
-                        break;
-                }
+                action.started += OnGhostJumpPressed;
+                action.canceled += OnGhostJumpReleased;
             }
-        }
-
-        if (player2Input == null)
-        {
-            return;
-        }
-
-        {
-            foreach (var action in player2Input.currentActionMap.actions)
+            else if (action.name == Strings.Interact)
             {
-                Debug.Log($"Unsubscribed {action}.");
-                switch (action.name)
-                {
-                    case Strings.Move:
-                        action.performed -= OnGhostMovementInput;
-                        action.canceled -= OnGhostNoMovementInput;
-                        break;
-                    case Strings.Jump:
-                        action.started -= OnGhostJumpPressed;
-                        action.canceled -= OnGhostJumpReleased;
-                        break;
-                }
+                action.started += GhostInteract;
             }
         }
     }
@@ -188,7 +214,7 @@ public class CharacterHandler : MonoBehaviour
         }
     }
 
-    private List<InputDevice> GetAllInputDevices()
+    private static List<InputDevice> GetAllInputDevices()
     {
         var devices = new List<InputDevice> { Keyboard.current };
         devices.AddRange(Gamepad.all);

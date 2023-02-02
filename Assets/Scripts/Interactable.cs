@@ -1,11 +1,17 @@
-﻿using System;
-using GameConstants;
+﻿using GameConstants;
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
 public class Interactable : MonoBehaviour
 {
     [SerializeField] private Collider interactableTrigger;
+
+    [Header("Offset From Owner Transform When Held/Picked Up")] [SerializeField]
+    private Vector3 followOffset;
+
+    [SerializeField] private Transform parentTransform;
+    [SerializeField] private Collider physicsCollider;
+
     private InteractableState interactableState;
     private bool isEnabled;
     private Transform ownerTransform;
@@ -17,7 +23,7 @@ public class Interactable : MonoBehaviour
 
     private void Update()
     {
-        if (ownerTransform != null && interactableState != InteractableState.Used)
+        if (ownerTransform != null && interactableState == InteractableState.Interacted)
         {
             FollowOwner();
         }
@@ -30,43 +36,60 @@ public class Interactable : MonoBehaviour
             return;
         }
 
-        if (!other.CompareTag(Tags.PlayerTag) || !other.TryGetComponent<GhostInteraction>(out var interactable))
+        if (!other.CompareTag(Tags.PlayerTag) || !other.TryGetComponent<HumanInteraction>(out var humanInteraction))
         {
             return;
         }
 
         // TODO: Show input that interaction possible
-        interactable.AddInteractable(this);
-        ownerTransform = interactable.transform;
-        interactableState = InteractableState.Interacted;
+        humanInteraction.AddPossibleInteractable(this);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (!isEnabled)
+        if (!isEnabled || interactableState == InteractableState.Used)
         {
             return;
         }
 
-        if (other.CompareTag(Tags.PlayerTag))
+        if (!other.CompareTag(Tags.PlayerTag) || !other.TryGetComponent<HumanInteraction>(out var humanInteraction))
         {
-            
+            return;
         }
+
+        humanInteraction.RemovePossibleInteractable(this);
+    }
+
+    public void PickUp(Transform newOwner)
+    {
+        ownerTransform = newOwner;
+        ToggleCollider();
+        interactableState = InteractableState.Interacted;
+    }
+
+    public void Drop()
+    {
+        ownerTransform = null;
+        ToggleCollider();
+        interactableState = InteractableState.Free;
     }
 
     private void FollowOwner()
     {
-        transform.position = ownerTransform.position;
+        parentTransform.position = ownerTransform.position + followOffset;
     }
 
     private void MakeTrigger()
     {
+        isEnabled = true;
         interactableTrigger.isTrigger = true;
     }
 
-    public void ToggleCollider()
+    private void ToggleCollider()
     {
         isEnabled = !isEnabled;
+        interactableTrigger.enabled = !interactableTrigger.enabled;
+        physicsCollider.enabled = !physicsCollider.enabled;
     }
 }
 
