@@ -157,7 +157,7 @@ MonoBehaviour:
   floorMask:
     serializedVersion: 2
     m_Bits: 64
-  jumpForce: 1
+  jumpForce: 5
 --- !u!65 &7507159916934331797
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -1,5 +1,4 @@
 using System;
-using GD.MinMaxSlider;
 using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -10,9 +9,7 @@ namespace Audio
     public class SfxSO : ScriptableObject
     {
         public AudioClip[] clips;
-        [MinMaxSlider(0f, 1f)]
         public Vector2 volume = new Vector2(.5f, .5f);
-        [MinMaxSlider(0f, 1f)]
         public Vector2 pitch = new Vector2(1, 1);
         [SerializeField] private int playIndex;
         [SerializeField] private ClipPlayOrder playOrder;
