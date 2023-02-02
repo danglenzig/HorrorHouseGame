@@ -4,15 +4,14 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class Interactable : MonoBehaviour
 {
-    [SerializeField] private Collider interactableTrigger;
-
     [Header("Offset From Owner Transform When Held/Picked Up")] [SerializeField]
     private Vector3 followOffset;
 
     [SerializeField] private Transform parentTransform;
     [SerializeField] private Collider physicsCollider;
-
     private InteractableState interactableState;
+
+    private Collider interactableTrigger;
     private bool isEnabled;
     private Transform ownerTransform;
 
@@ -81,6 +80,7 @@ public class Interactable : MonoBehaviour
 
     private void MakeTrigger()
     {
+        interactableTrigger = GetComponent<Collider>();
         isEnabled = true;
         interactableTrigger.isTrigger = true;
     }
