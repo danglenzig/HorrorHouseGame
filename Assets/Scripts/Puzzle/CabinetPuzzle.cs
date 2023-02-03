@@ -21,6 +21,8 @@ namespace Puzzle
 
         private List<List<GameObject>> _stateLists = new List<List<GameObject>>();
 
+        public GameObject canvas;
+
         public enum CabinetState
         {
             Outside,
@@ -70,6 +72,7 @@ namespace Puzzle
             {
                 //state 1
                 case CabinetState.Outside:
+                    canvas.SetActive(false);
 
                     StartStateDialogue(state1AutoDialogue);
 
