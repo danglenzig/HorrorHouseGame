@@ -133,7 +133,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da964a69e0bb8d847a890442a1060e18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementInput: {x: 0, y: 0, z: 0}
   shouldJump: 0
   moveSpeed: 4
   floatRange: {x: 2.5, y: 5}
@@ -173,7 +172,7 @@ MonoBehaviour:
   cam: {fileID: 0}
   mask:
     serializedVersion: 2
-    m_Bits: 384
+    m_Bits: 128
 --- !u!1 &7046121436711931573
 GameObject:
   m_ObjectHideFlags: 0
