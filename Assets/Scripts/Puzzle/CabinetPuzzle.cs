@@ -53,6 +53,13 @@ namespace Puzzle
             }
         }
 
+        public void UpdateState(int state)
+        {
+            CabinetState stateToGet = (CabinetState)state;
+
+            UpdatePuzzleState(stateToGet);
+        }
+        
         public void UpdatePuzzleState(CabinetState newState)
         {
             puzzleState = newState;

@@ -136,7 +136,7 @@ MonoBehaviour:
   MovementInput: {x: 0, y: 0, z: 0}
   shouldJump: 0
   moveSpeed: 4
-  floatRange: {x: 3.25, y: 5.5}
+  floatRange: {x: 2.5, y: 5}
   floatSpeed: 1.75
 --- !u!114 &1399916890176538687
 MonoBehaviour:

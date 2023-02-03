@@ -146,6 +146,7 @@ public class CharacterHandler : MonoBehaviour
 
     private void GhostInteract(InputAction.CallbackContext obj)
     {
+        OnGhostInteract.Invoke();
     }
 
     private void SpawnCharacters()
