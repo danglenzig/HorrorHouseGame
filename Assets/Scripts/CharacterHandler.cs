@@ -60,7 +60,7 @@ public class CharacterHandler : MonoBehaviour
                     action.started -= OnHumanJumpPressed;
                     action.canceled -= OnHumanJumpReleased;
                 }
-                
+
                 else if (action.name == Strings.Interact)
                 {
                     action.started -= HumanInteract;

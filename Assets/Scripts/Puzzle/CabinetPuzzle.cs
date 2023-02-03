@@ -59,7 +59,7 @@ namespace Puzzle
 
             UpdatePuzzleState(stateToGet);
         }
-        
+
         public void UpdatePuzzleState(CabinetState newState)
         {
             puzzleState = newState;
@@ -81,9 +81,9 @@ namespace Puzzle
                     break;
                 //state 2
                 case CabinetState.Inside:
-                    
+
                     StartStateDialogue(state2AutoDialogue);
-                    
+
                     foreach (GameObject obj in state2Objs)
                     {
                         obj.SetActive(true);
@@ -94,7 +94,7 @@ namespace Puzzle
                 case CabinetState.HasSpokenAtCabinet:
 
                     StartStateDialogue(state3AutoDialogue);
-                    
+
                     foreach (GameObject obj in state3Objs)
                     {
                         obj.SetActive(true);
@@ -105,7 +105,7 @@ namespace Puzzle
                 case CabinetState.HasDoneBoxQte:
 
                     StartStateDialogue(state4AutoDialogue);
-                    
+
                     foreach (GameObject obj in state4Objs)
                     {
                         obj.SetActive(true);
@@ -116,7 +116,7 @@ namespace Puzzle
                 case CabinetState.HasPushedSofa:
 
                     StartStateDialogue(state5AutoDialogue);
-                    
+
                     foreach (GameObject obj in state5Objs)
                     {
                         obj.SetActive(true);
@@ -127,7 +127,7 @@ namespace Puzzle
                 case CabinetState.HasOpenedCabinet:
 
                     StartStateDialogue(state6AutoDialogue);
-                    
+
                     foreach (GameObject obj in state6Objs)
                     {
                         obj.SetActive(true);
@@ -144,13 +144,6 @@ namespace Puzzle
                 DialogueCanvas.Instance.QueueDialogue(dia);
             }
         }
-        
-        /*private IEnumerator DelayFunction(float delayTime, System.Action method)
-        {
-            yield return new WaitForSeconds(delayTime);
-
-            method();
-        }*/
 
         private void DisableAllObjs()
         {
