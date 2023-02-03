@@ -8,5 +8,10 @@ namespace Puzzle
         {
             gameObject.SetActive(true);
         }
+
+        public void TurnOff()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
