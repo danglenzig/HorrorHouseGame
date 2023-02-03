@@ -7,6 +7,8 @@
 //              button a certain number of times.
 //
 *****************************************************************************/
+
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +17,8 @@ namespace QTESystem
     public class MashingQTE : SimpleQTE
     {
         [Header("Mashing QTE Settings")]
-        [Tooltip("Assuming no lost progress, how many times would the player need to press the input in order to trigger a success.")]
+        [Tooltip(
+            "Assuming no lost progress, how many times would the player need to press the input in order to trigger a success.")]
         public int timesToHit = 5;
 
         /// <summary>
@@ -41,12 +44,15 @@ namespace QTESystem
         /// The min and max size of the progress fill
         /// </summary>
         private float minSize = 100;
+
         private float maxSize = 150;
 
         /// <summary>
         /// Store the original scale of the object to ensure it doesn't grow/shrink over time
         /// </summary>
         Vector2 originalScale;
+
+        private CharacterType characterType;
 
         private void Awake()
         {
@@ -66,13 +72,58 @@ namespace QTESystem
 
             progressObj.gameObject.SetActive(true);
 
-            
+            switch (characterType)
+            {
+                case CharacterType.Human:
+                    Game.CharacterHandler.OnHumanInteract.AddListener(OnHumanInteract);
+                    break;
+                case CharacterType.Ghost:
+                    Game.CharacterHandler.OnGhostInteract.AddListener(OnGhostInteract);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
             // If should animate start animating
             if (animateInput)
             {
-                iTween.ValueTo(this.gameObject, iTween.Hash("from", 1f, "to", 1.1f, "time", 0.1f, "onupdate", "UpdateScale", "looptype", iTween.LoopType.pingPong));
+                iTween.ValueTo(this.gameObject,
+                    iTween.Hash("from", 1f, "to", 1.1f, "time", 0.1f, "onupdate", "UpdateScale", "looptype",
+                        iTween.LoopType.pingPong));
             }
-            
+        }
+
+        public void SetCharacterType(CharacterType chartype)
+        {
+            characterType = chartype;
+        }
+        
+        private void OnGhostInteract()
+        {
+            InputIsDownThisFrame = true;
+        }
+
+        private void OnHumanInteract()
+        {
+            InputIsDownThisFrame = true;
+        }
+
+        private bool InputIsDownThisFrame { get; set; }
+
+        private void OnDisable()
+        {
+            // UNSUBSCRIBE INPUTS
+            switch (characterType)
+            {
+                case CharacterType.Human:
+                    Game.CharacterHandler.OnHumanInteract.RemoveListener(OnHumanInteract);
+                    break;
+                case CharacterType.Ghost:
+                    Game.CharacterHandler.OnGhostInteract.RemoveListener(OnGhostInteract);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         protected override void Update()
@@ -80,49 +131,50 @@ namespace QTESystem
             switch (state)
             {
                 case QTEState.Active:
+                {
+                    // If pressed, increase progress
+                    // inputData && inputData.IsDown()
+                    if (inputData && inputData.IsDown())
                     {
-                        // If pressed, increase progress
-                        if (inputData && inputData.IsDown())
+                        progress += (1.0f / timesToHit);
+
+                        if (progress >= 1)
                         {
-                            progress += (1.0f / timesToHit);
-
-                            if (progress >= 1)
-                            {
-                                QTESuccess();
-                            }
-
+                            QTESuccess();
                         }
-                        else if (failIfIncorrect && inputData.AnotherInputDown())
-                        {
-                            QTEFailure();
-                        }
-                        // If not, lose progress
-                        else if (loseProgress)
-                        {
-                            progress -= Time.deltaTime * lossRate;
-                        }
-
-                        // Ensure the progress bar is within valid parameters
-                        progress = Mathf.Clamp(progress, 0, 1);
-
-                        // Adjust the progress bar
-                        progressObj.rectTransform.sizeDelta = Vector2.one * (minSize + ((maxSize - minSize) * progress));
-
-                        // Uncomment to have the timer change color over time
-                        //progressObj.color = Color.Lerp(endColor, startColor, progress);
-
-
-
-                        break;
                     }
+                    else if (failIfIncorrect && inputData.AnotherInputDown())
+                    {
+                        QTEFailure();
+                    }
+                    // If not, lose progress
+                    else if (loseProgress)
+                    {
+                        progress -= Time.deltaTime * lossRate;
+                    }
+
+                    // Ensure the progress bar is within valid parameters
+                    progress = Mathf.Clamp(progress, 0, 1);
+
+                    // Adjust the progress bar
+                    progressObj.rectTransform.sizeDelta = Vector2.one * (minSize + ((maxSize - minSize) * progress));
+
+                    // Uncomment to have the timer change color over time
+                    //progressObj.color = Color.Lerp(endColor, startColor, progress);
+
+
+                    break;
+                }
             }
+
+            InputIsDownThisFrame = false;
         }
 
         protected override void CleanUp()
         {
             iTween.Stop(gameObject);
 
-            if(progressObj)
+            if (progressObj)
             {
                 progressObj.gameObject.SetActive(false);
             }
@@ -139,5 +191,4 @@ namespace QTESystem
             input.rectTransform.sizeDelta = originalScale * val;
         }
     }
-
 }
