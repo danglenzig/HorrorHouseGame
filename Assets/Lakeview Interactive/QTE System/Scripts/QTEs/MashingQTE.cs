@@ -86,6 +86,7 @@ namespace QTESystem
         // Call on frame the QTE was instantiated
         public void SetCharType(CharacterType charType)
         {
+            characterType = charType;
             switch (characterType)
             {
                 case CharacterType.Human:
@@ -99,11 +100,6 @@ namespace QTESystem
                         $"[{name}] QTE needs to have a character type! Set in SetCharacterType() when instantiating or enabling!");
                     throw new ArgumentOutOfRangeException();
             }
-        }
-
-        public void SetCharacterType(CharacterType charType)
-        {
-            characterType = charType;
         }
 
         private void OnGhostInteract()
