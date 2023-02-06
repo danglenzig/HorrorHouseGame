@@ -9,6 +9,7 @@
 *****************************************************************************/
 
 using System;
+using Lakeview_Interactive.QTE_System.Scripts.QTEs;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -72,18 +73,6 @@ namespace QTESystem
 
             progressObj.gameObject.SetActive(true);
 
-            switch (characterType)
-            {
-                case CharacterType.Human:
-                    Game.CharacterHandler.OnHumanInteract.AddListener(OnHumanInteract);
-                    break;
-                case CharacterType.Ghost:
-                    Game.CharacterHandler.OnGhostInteract.AddListener(OnGhostInteract);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
             // If should animate start animating
             if (animateInput)
             {
@@ -93,11 +82,30 @@ namespace QTESystem
             }
         }
 
-        public void SetCharacterType(CharacterType chartype)
+
+        // Call on frame the QTE was instantiated
+        public void SetCharType(CharacterType charType)
         {
-            characterType = chartype;
+            switch (characterType)
+            {
+                case CharacterType.Human:
+                    Game.CharacterHandler.OnHumanInteract.AddListener(OnHumanInteract);
+                    break;
+                case CharacterType.Ghost:
+                    Game.CharacterHandler.OnGhostInteract.AddListener(OnGhostInteract);
+                    break;
+                default:
+                    Debug.LogError(
+                        $"[{name}] QTE needs to have a character type! Set in SetCharacterType() when instantiating or enabling!");
+                    throw new ArgumentOutOfRangeException();
+            }
         }
-        
+
+        public void SetCharacterType(CharacterType charType)
+        {
+            characterType = charType;
+        }
+
         private void OnGhostInteract()
         {
             InputIsDownThisFrame = true;
@@ -132,8 +140,20 @@ namespace QTESystem
             {
                 case QTEState.Active:
                 {
+                    switch (characterType)
+                    {
+                        case CharacterType.Human:
+                            break;
+                        case CharacterType.Ghost:
+                            break;
+                        default:
+                            Debug.LogError(
+                                $"[{name}] QTE needs to have a character type! Set in SetCharacterType() when instantiating or enabling!");
+                            throw new ArgumentOutOfRangeException();
+                    }
+
                     // If pressed, increase progress
-                    // inputData && inputData.IsDown()
+                    // InputIsDownThisFrame
                     if (inputData && inputData.IsDown())
                     {
                         progress += (1.0f / timesToHit);
