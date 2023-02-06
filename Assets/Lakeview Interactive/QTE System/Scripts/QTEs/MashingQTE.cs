@@ -83,7 +83,7 @@ namespace QTESystem
         }
 
 
-        // Call on frame the QTE was instantiated
+        // Call on frame the QTE was instantiated or enabled
         public void SetCharType(CharacterType charType)
         {
             characterType = charType;
@@ -97,7 +97,7 @@ namespace QTESystem
                     break;
                 default:
                     Debug.LogError(
-                        $"[{name}] QTE needs to have a character type! Set in SetCharacterType() when instantiating or enabling!");
+                        $"[{name}] QTE needs to have a character type! Set in SetCharacterType() when instantiating or enabling!", this);
                     throw new ArgumentOutOfRangeException();
             }
         }
@@ -144,8 +144,8 @@ namespace QTESystem
                             break;
                         default:
                             Debug.LogError(
-                                $"[{name}] QTE needs to have a character type! Set in SetCharacterType() when instantiating or enabling!");
-                            throw new ArgumentOutOfRangeException();
+                                $"[{name}] QTE needs to have a character type! Set in SetCharacterType() when instantiating or enabling!", this);
+                            return;
                     }
 
                     // If pressed, increase progress
